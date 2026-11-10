@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Bastide Calen – Chambres d'hôtes dans le massif des Maures (démo)</title>
+<meta name="description" content="Site de démonstration d'une maison d'hôtes fictive dans le Var, avec calendrier de disponibilités et réservation en direct. Conçu par Laurent Arcos, développeur web.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Laurent Arcos">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232D5F7A'/%3E%3Cpath d='M12 5c2 2.5 3 4.3 3 6a3 3 0 0 1-6 0c0-1.7 1-3.5 3-6zM8 15h8l-1 4H9z' fill='none' stroke='white' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B1B1B;--muted:#4A4A4A;--soft:#6A6A6A;--line:#E6E6E3;--bg2:#F7F6F3;--accent:#2D5F7A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Jost,system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.6;font-size:16px}
+a{color:var(--ink)}a:hover{color:var(--accent)}
+h1,h2,h3,p{margin:0}
+img{display:block;max-width:100%}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.demo{background:#F4F4F2;color:var(--muted);font-size:13px;padding:8px 24px;text-align:center}
+.demo a{color:var(--ink)}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:20px;padding-bottom:20px}
+.logo{text-decoration:none;font-size:20px;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
+nav.main{display:flex;flex-wrap:wrap;gap:32px;font-size:15px}
+nav a{text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font:inherit;font-weight:500;font-size:15px;border-radius:8px;min-height:44px;padding:10px 20px;cursor:pointer;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+.btn.dark{background:var(--ink);color:#fff}.btn.dark:hover{color:#fff;background:#333}
+.hero{padding:0 32px}
+.hero-in{max-width:1376px;margin:0 auto;position:relative}
+.hero-img{position:relative;height:min(680px,80vh);min-height:460px;border-radius:20px;overflow:hidden;background:#3E7FC1}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 60%}
+.hero-txt{position:absolute;left:0;right:0;top:64px;text-align:center;padding:0 24px;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.hero-txt p{font-size:14px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;margin-bottom:10px}
+h1{font-weight:400;font-size:clamp(40px,6vw,76px);line-height:1.05;letter-spacing:-.01em}
+.search{position:relative;margin:-52px auto 0;max-width:980px;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(27,27,27,.14);display:flex;flex-wrap:wrap;padding:10px;gap:6px}
+.search .f{flex:1 1 160px;display:flex;flex-direction:column;padding:10px 18px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.search .f+.f{border-left:1px solid var(--line)}
+.search .f:first-child{flex-basis:220px}
+.search select,.search .val{border:0;padding:4px 0 0;font:inherit;font-size:17px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink);background:transparent;min-height:32px}
+.search button{flex:0 0 auto;border:0;border-radius:12px;background:var(--accent);color:#fff;font:inherit;font-weight:500;font-size:16px;padding:0 28px;min-height:60px;cursor:pointer}
+.search button:hover{background:#244e65}
+.intro{max-width:760px;margin:0 auto;padding:96px 32px 72px;text-align:center;display:flex;flex-direction:column;gap:20px;align-items:center}
+.intro>p{font-size:clamp(21px,2.4vw,28px);font-weight:300;line-height:1.45}
+.amen{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;font-size:15px;color:var(--muted)}
+.amen span{display:flex;align-items:center;gap:8px}
+.sh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px}
+h2{font-weight:400;font-size:36px;line-height:1.2}
+.rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;padding-bottom:96px}
+.room{display:flex;flex-direction:column;gap:14px}
+.room .ph{aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:#EEE}
+.room img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.room:hover img{transform:scale(1.03)}
+.room .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.room h3{font-weight:500;font-size:20px}
+.price{font-size:15px;color:var(--muted)}.price b{color:var(--ink);font-weight:500}
+.room .facts{margin-top:-8px;color:var(--muted);font-size:15px}
+.room .btn{align-self:flex-start}
+.around{background:var(--bg2)}
+.around .wrap{padding-top:96px;padding-bottom:96px;display:flex;flex-wrap:wrap;gap:48px;align-items:center}
+.around .ph{flex:1 1 600px;min-width:0;border-radius:20px;overflow:hidden;aspect-ratio:3/2}
+.around .ph img{width:100%;height:100%;object-fit:cover}
+.around .txt{flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.around ul{list-style:none;margin:0;padding:0;border-top:1px solid #E0DFDA}
+.around li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid #E0DFDA}
+.around li b{font-weight:500}.around li span{color:var(--muted);text-align:right}
+.book .wrap{padding-top:96px;padding-bottom:96px}
+.book .sh{align-items:flex-end}
+.book .sh p{color:var(--muted);max-width:560px;margin-top:8px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{min-height:44px;padding:10px 18px;border-radius:999px;cursor:pointer;font:inherit;font-weight:500;font-size:15px;background:#fff;color:var(--ink);border:1px solid #DADAD6}
+.tab[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.book-grid{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+.cal{flex:1 1 540px;min-width:0;border:1px solid var(--line);border-radius:16px;padding:28px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.cal-head h3{font-weight:500;font-size:19px;text-transform:capitalize}
+.nav-btn{width:44px;height:44px;border-radius:50%;border:1px solid #DADAD6;background:#fff;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.dow,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+.dow{font-size:13px;color:var(--soft);margin-bottom:6px}
+.days{justify-items:center}
+.day{width:min(52px,100%);aspect-ratio:1;border-radius:50%;font:inherit;font-size:16px;font-weight:500;background:#fff;color:var(--ink);border:1px solid transparent;cursor:pointer}
+.day:hover:not(:disabled){border-color:var(--ink)}
+.day:disabled{cursor:not-allowed}
+.day.past{color:#A3A3A0;cursor:default}
+.day.booked{color:#8F8F8B;text-decoration:line-through}
+.day.range{background:#E6EEF2;border-color:#E6EEF2}
+.day.edge{background:var(--ink);color:#fff;border-color:var(--ink)}
+.cal .note{margin-top:18px;font-size:13px;color:var(--soft)}
+.sum{flex:1 1 360px;min-width:0;border-radius:16px;box-shadow:0 12px 40px rgba(27,27,27,.12);padding:28px;display:flex;flex-direction:column;gap:16px}
+.sum .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sum h3{font-weight:500;font-size:20px}
+.dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #DADAD6;border-radius:10px}
+.dates div{padding:10px 14px}.dates div+div{border-left:1px solid #DADAD6}
+.lbl{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hint{font-size:14px;color:var(--muted)}
+.lines{display:flex;flex-direction:column;gap:8px;font-size:15px}
+.lines div{display:flex;justify-content:space-between}.lines span:first-child{color:var(--muted)}
+.lines .tot{border-top:1px solid var(--line);padding-top:12px;font-weight:600;font-size:17px}.lines .tot span:first-child{color:var(--ink)}
+form{display:flex;flex-direction:column;gap:10px}
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:500}
+input{font:inherit;padding:11px 13px;border:1px solid #BDBDB8;border-radius:8px;min-height:44px;font-size:16px;color:var(--ink)}
+.go{min-height:52px;border:0;border-radius:10px;font:inherit;font-weight:500;font-size:16px;padding:14px 24px;background:var(--accent);color:#fff;cursor:pointer}
+.go:disabled{background:#E6E6E3;color:var(--soft);cursor:not-allowed}
+.small{font-size:13px;color:var(--soft);text-align:center}
+.done{display:none;flex-direction:column;gap:14px}
+.sum.sent .done{display:flex}.sum.sent .form-part{display:none}
+.done h3{font-weight:400;font-size:28px}.done p{color:var(--muted)}
+.form-part{display:flex;flex-direction:column;gap:16px}
+.reviews{background:var(--bg2)}
+.reviews .wrap{padding-top:80px;padding-bottom:80px;display:flex;flex-direction:column;gap:24px}
+.rv{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.rv div{background:#fff;border-radius:14px;padding:28px;min-height:120px;display:flex;align-items:center;justify-content:center;color:var(--soft);text-align:center}
+.infos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:40px;padding-top:96px;padding-bottom:96px}
+.infos h3{font-weight:500;font-size:18px;margin-bottom:8px}.infos p{color:var(--muted);font-size:15px}
+footer{border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{padding-top:40px;padding-bottom:40px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+footer .logo{font-size:16px;color:var(--ink)}
+@media (max-width:760px){nav.main{display:none}.wrap{padding:0 20px}.hero{padding:0 12px}.search .f+.f{border-left:0}.search button{width:100%}.cal,.sum{padding:20px}}
+</style>
+</head>
+<body>
+<div class="demo">Site de démonstration – maison d'hôtes fictive, conçu par <a href="https://cv-interactif-laurentarcos.vercel.app">Laurent Arcos</a>. Photos d'illustration : Pexels.</div>
+
+<header><div class="wrap">
+<a class="logo" href="#accueil">Bastide Calen</a>
+<nav class="main" aria-label="Navigation principale"><a href="#chambres">Chambres</a><a href="#alentours">Alentours</a><a href="#reserver">Disponibilités</a><a href="#infos">Infos</a></nav>
+<a class="btn dark" href="#reserver">Réserver</a>
+</div></header>
+
+<main>
+<section id="accueil" class="hero"><div class="hero-in">
+<div class="hero-img">
+<img src="images/hero.jpg" alt="La bastide en pierre et sa piscine, sous un ciel bleu" fetchpriority="high">
+<div class="hero-txt"><p>Chambres d'hôtes · Collobrières · Var</p><h1>Le calme des Maures,<br>la mer pas loin.</h1></div>
+</div>
+<form class="search" id="search" aria-label="Rechercher des disponibilités">
+<label class="f">Chambre<select id="roomSelect"></select></label>
+<div class="f">Arrivée<span class="val" id="sStart">Ajouter une date</span></div>
+<div class="f">Départ<span class="val" id="sEnd">Ajouter une date</span></div>
+<button type="submit">Voir les disponibilités</button>
+</form>
+</div></section>
+
+<section class="intro">
+<p>Une bastide du XIXe siècle à la sortie du village, quatre chambres, une piscine et un petit-déjeuner maison. Les plages de Hyères à environ 35 minutes.</p>
+<div class="amen">
+<span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18c2 0 2-1.5 4-1.5S8 18 10 18s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5M7 14V5a2 2 0 0 1 4 0M15 14V5"/></svg>Piscine</span>
+<span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM6 2v3M10 2v3M14 2v3"/></svg>Petit-déjeuner inclus</span>
+<span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg>Parking privé</span>
+<span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M12 19.5h.01"/></svg>Wi-Fi</span>
+</div>
+</section>
+
+<section id="chambres"><div class="wrap">
+<div class="sh"><h2>Les chambres</h2><span class="price">Petit-déjeuner compris · salle d'eau privée</span></div>
+<div class="rooms" id="rooms"></div>
+</div></section>
+
+<section id="alentours" class="around"><div class="wrap">
+<div class="ph"><img src="images/porquerolles.jpg" alt="Une crique aux eaux turquoise bordée de pins, sur l'île de Porquerolles" loading="lazy"></div>
+<div class="txt">
+<p class="eyebrow">Alentours</p>
+<h2>Les îles d'Or à une petite heure</h2>
+<p style="color:var(--muted)">La bastide est une base idéale pour explorer le Var, entre forêt des Maures et littoral.</p>
+<ul>
+<li><b>Village de Collobrières</b><span>5 min</span></li>
+<li><b>Chartreuse de la Verne</b><span>15 min</span></li>
+<li><b>Plages de Hyères</b><span>env. 35 min</span></li>
+<li><b>Bateau pour Porquerolles</b><span>env. 50 min</span></li>
+</ul>
+</div>
+</div></section>
+
+<section id="reserver" class="book"><div class="wrap">
+<div class="sh">
+<div><h2>Disponibilités</h2><p>Réservez en direct : aucuns frais de service. Calendrier synchronisé avec Airbnb et Booking.</p></div>
+<div class="tabs" role="group" aria-label="Choisir une chambre" id="tabs"></div>
+</div>
+<div class="book-grid">
+<div class="cal">
+<div class="cal-head">
+<button type="button" class="nav-btn" id="prev" aria-label="Mois précédent"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+<h3 id="month" aria-live="polite"></h3>
+<button type="button" class="nav-btn" id="next" aria-label="Mois suivant"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+</div>
+<div class="dow" aria-hidden="true"><span>lu</span><span>ma</span><span>me</span><span>je</span><span>ve</span><span>sa</span><span>di</span></div>
+<div class="days" id="days"></div>
+<p class="note">Les dates barrées sont déjà réservées.</p>
+</div>
+<aside class="sum" id="sum">
+<div class="form-part">
+<div class="top"><h3 id="roomName"></h3><span class="price"><b id="roomPrice"></b> / nuit</span></div>
+<div class="dates"><div><span class="lbl">Arrivée</span><span id="dStart">—</span></div><div><span class="lbl">Départ</span><span id="dEnd">—</span></div></div>
+<p class="hint" id="hint"></p>
+<div class="lines">
+<div><span id="nightsLbl">Nuits</span><span id="sub">—</span></div>
+<div><span>Frais de service</span><span>0 €</span></div>
+<div class="tot"><span>Total</span><span id="total">—</span></div>
+</div>
+<form id="bookForm">
+<label>Nom<input type="text" name="nom" required autocomplete="name"></label>
+<label>E-mail<input type="email" name="email" required autocomplete="email"></label>
+<button type="submit" class="go" id="go" disabled>Demander la réservation</button>
+<span class="small">Acompte de 30 %. Taxe de séjour en sus. Démo : rien n'est envoyé.</span>
+</form>
+</div>
+<div class="done" role="status" aria-live="polite">
+<h3>Merci, c'est noté.</h3>
+<p id="doneTxt"></p>
+<button type="button" class="btn" id="again" style="align-self:flex-start">Nouvelle demande</button>
+</div>
+</aside>
+</div>
+</div></section>
+
+<section class="reviews"><div class="wrap">
+<h2>Ils ont séjourné ici</h2>
+<div class="rv"><div>[AVIS RÉEL AIRBNB OU GOOGLE N°1]</div><div>[AVIS RÉEL N°2]</div><div>[AVIS RÉEL N°3]</div></div>
+</div></section>
+
+<section id="infos"><div class="wrap infos">
+<div><h3>Arrivée et départ</h3><p>Arrivée dès 16 h, départ avant 11 h. Arrivée tardive possible sur demande.</p></div>
+<div><h3>Paiement et annulation</h3><p>Acompte de 30 % à la réservation, remboursé jusqu’à 14 jours avant l’arrivée.</p></div>
+<div><h3>Table d’hôtes</h3><p>Trois soirs par semaine sous la treille, [PRIX] par personne, sur réservation la veille.</p></div>
+<div><h3>Accès</h3><p>Voiture conseillée : la bastide est à la sortie du village, la mer à une demi-heure environ.</p></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+<span class="logo">Bastide Calen</span>
+<span>[ADRESSE], 83610 Collobrières · contact@[DOMAINE].fr</span>
+<span>Site conçu par <a href="https://cv-interactif-laurentarcos.vercel.app">Laurent Arcos</a> · démo, maison fictive</span>
+</div></footer>
+
+<script>
+(function(){
+var DAY=86400000;
+var rooms=[
+ {name:'Chambre Olivier',price:95,facts:'2 personnes · 18 m² · vue jardin',img:'images/olivier.jpg',pos:'center',alt:'Campagne provençale plantée d’oliviers et de cyprès'},
+ {name:'Chambre Lavande',price:110,facts:'2 personnes · 22 m² · terrasse privée',img:'images/lavande.jpg',pos:'center 70%',alt:'Vue sur une vallée provençale et ses collines'},
+ {name:'Suite Arbousier',price:145,facts:'4 personnes · 35 m² · deux chambres',img:'images/arbousier.jpg',pos:'center 40%',alt:'Façade en pierre fleurie de bougainvilliers'},
+ {name:'Chambre Figuier',price:95,facts:'2 personnes · 20 m² · accès PMR',img:'images/hero.jpg',pos:'70% center',alt:'La piscine et la bastide'}
+];
+var st={room:0,offset:0,start:null,end:null};
+var $=function(id){return document.getElementById(id)};
+var eur=function(n){return n.toLocaleString('fr-FR')+' €'};
+var fmt=function(t){return new Date(t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})};
+var fmtLong=function(t){return new Date(t).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})};
+function isBooked(room,d){var k=d.getDate()*7+(d.getMonth()+1)*13+room*5;return k%9===0||k%9===1||k%17===0}
+function scrollBook(){$('reserver').scrollIntoView({behavior:'smooth'})}
+
+// Cartes chambres, onglets, liste déroulante
+var roomsEl=$('rooms'),tabsEl=$('tabs'),sel=$('roomSelect');
+rooms.forEach(function(r,i){
+ var a=document.createElement('article');a.className='room';
+ a.innerHTML='<div class="ph"><img loading="lazy" src="'+r.img+'" alt="'+r.alt+'" style="object-position:'+r.pos+'"></div>'+
+ '<div class="top"><h3>'+r.name+'</h3><span class="price"><b>'+r.price+' €</b> / nuit</span></div>'+
+ '<p class="facts">'+r.facts+'</p><button type="button" class="btn">Voir les dates</button>';
+ a.querySelector('button').addEventListener('click',function(){setRoom(i);scrollBook()});
+ roomsEl.appendChild(a);
+ var t=document.createElement('button');t.type='button';t.className='tab';t.textContent=r.name.replace(/^(Chambre|Suite) /,'');
+ t.addEventListener('click',function(){setRoom(i)});tabsEl.appendChild(t);
+ var o=document.createElement('option');o.value=i;o.textContent=r.name+' – '+r.price+' €';sel.appendChild(o);
+});
+sel.addEventListener('change',function(){setRoom(+sel.value)});
+$('search').addEventListener('submit',function(e){e.preventDefault();scrollBook()});
+$('prev').addEventListener('click',function(){if(st.offset>0){st.offset--;render()}});
+$('next').addEventListener('click',function(){if(st.offset<11){st.offset++;render()}});
+
+function setRoom(i){st.room=i;st.start=null;st.end=null;$('sum').classList.remove('sent');render()}
+function pick(t){
+ if(st.start===null||st.end!==null||t<=st.start){st.start=t;st.end=null}
+ else{
+  for(var x=st.start;x<t;x+=DAY){if(isBooked(st.room,new Date(x))){st.start=t;st.end=null;render();return}}
+  st.end=t;
+ }
+ render();
+}
+
+function render(){
+ var r=rooms[st.room];
+ [].forEach.call(tabsEl.children,function(b,i){b.setAttribute('aria-pressed',i===st.room?'true':'false')});
+ sel.value=st.room;
+ var today=new Date();today.setHours(0,0,0,0);
+ var first=new Date(today.getFullYear(),today.getMonth()+st.offset,1);
+ $('month').textContent=first.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+ $('prev').disabled=st.offset===0;
+ var days=$('days');days.innerHTML='';
+ var lead=(first.getDay()+6)%7,n=new Date(first.getFullYear(),first.getMonth()+1,0).getDate();
+ for(var i=0;i<lead;i++)days.appendChild(document.createElement('span'));
+ for(var d=1;d<=n;d++){
+  var date=new Date(first.getFullYear(),first.getMonth(),d),t=date.getTime();
+  var past=t<today.getTime(),booked=!past&&isBooked(st.room,date);
+  var edge=st.start===t||st.end===t,range=st.start!==null&&st.end!==null&&t>st.start&&t<st.end;
+  var b=document.createElement('button');b.type='button';b.textContent=d;
+  b.className='day'+(past?' past':'')+(booked?' booked':'')+(edge?' edge':'')+(range?' range':'');
+  b.disabled=past||booked;
+  b.setAttribute('aria-pressed',edge||range?'true':'false');
+  b.setAttribute('aria-label',fmtLong(t)+(booked?', déjà réservé':past?', passé':', libre'));
+  (function(t){b.addEventListener('click',function(){pick(t)})})(t);
+  days.appendChild(b);
+ }
+ var nights=st.start!==null&&st.end!==null?Math.round((st.end-st.start)/DAY):0;
+ $('roomName').textContent=r.name;$('roomPrice').textContent=r.price+' €';
+ $('dStart').textContent=st.start===null?'—':fmt(st.start);
+ $('dEnd').textContent=st.end===null?'—':fmt(st.end);
+ $('sStart').textContent=st.start===null?'Ajouter une date':fmt(st.start);
+ $('sEnd').textContent=st.end===null?'Ajouter une date':fmt(st.end);
+ $('hint').textContent=st.start===null?'Choisissez votre arrivée dans le calendrier.':st.end===null?'Choisissez votre date de départ.':'Plus que votre nom et votre e-mail.';
+ $('nightsLbl').textContent=nights?r.price+' € × '+nights+(nights>1?' nuits':' nuit'):'Nuits';
+ $('sub').textContent=$('total').textContent=nights?eur(nights*r.price):'—';
+ $('go').disabled=!nights;
+ $('doneTxt').textContent=(nights?r.name+', du '+fmt(st.start)+' au '+fmt(st.end)+', '+eur(nights*r.price):r.name)+'. Dans la version réelle, les dates sont bloquées 24 h et un lien de paiement de l’acompte part par e-mail.';
+}
+$('bookForm').addEventListener('submit',function(e){e.preventDefault();if(st.end!==null){$('sum').classList.add('sent')}});
+$('again').addEventListener('click',function(){$('bookForm').reset();st.start=null;st.end=null;$('sum').classList.remove('sent');render()});
+render();
+})();
+</script>
+</body>
+</html>
