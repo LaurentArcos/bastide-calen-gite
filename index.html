@@ -34,14 +34,8 @@ nav a{text-decoration:none}
 .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 60%}
 .hero-txt{position:absolute;left:0;right:0;top:64px;text-align:center;padding:0 24px;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
 .hero-txt p{font-size:14px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;margin-bottom:10px}
+.hero-cta{margin-top:28px;text-shadow:none;border-color:#fff;font-size:16px;padding:12px 26px}
 h1{font-weight:400;font-size:clamp(40px,6vw,76px);line-height:1.05;letter-spacing:-.01em}
-.search{position:relative;margin:-52px auto 0;max-width:980px;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(27,27,27,.14);display:flex;flex-wrap:wrap;padding:10px;gap:6px}
-.search .f{flex:1 1 160px;display:flex;flex-direction:column;padding:10px 18px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.search .f+.f{border-left:1px solid var(--line)}
-.search .f:first-child{flex-basis:220px}
-.search select,.search .val{border:0;padding:4px 0 0;font:inherit;font-size:17px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink);background:transparent;min-height:32px}
-.search button{flex:0 0 auto;border:0;border-radius:12px;background:var(--accent);color:#fff;font:inherit;font-weight:500;font-size:16px;padding:0 28px;min-height:60px;cursor:pointer}
-.search button:hover{background:#244e65}
 .intro{max-width:760px;margin:0 auto;padding:96px 32px 72px;text-align:center;display:flex;flex-direction:column;gap:20px;align-items:center}
 .intro>p{font-size:clamp(21px,2.4vw,28px);font-weight:300;line-height:1.45}
 .amen{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;font-size:15px;color:var(--muted)}
@@ -119,7 +113,7 @@ input{font:inherit;padding:11px 13px;border:1px solid #BDBDB8;border-radius:8px;
 footer{border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
 footer .wrap{padding-top:40px;padding-bottom:40px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
 footer .logo{font-size:16px;color:var(--ink)}
-@media (max-width:760px){nav.main{display:none}.wrap{padding:0 20px}.hero{padding:0 12px}.search .f+.f{border-left:0}.search button{width:100%}.cal,.sum{padding:20px}}
+@media (max-width:760px){nav.main{display:none}.wrap{padding:0 20px}.hero{padding:0 12px}.cal,.sum{padding:20px}}
 </style>
 </head>
 <body>
@@ -135,14 +129,8 @@ footer .logo{font-size:16px;color:var(--ink)}
 <section id="accueil" class="hero"><div class="hero-in">
 <div class="hero-img">
 <img src="images/hero.jpg" alt="La bastide en pierre et sa piscine, sous un ciel bleu" fetchpriority="high">
-<div class="hero-txt"><p>Chambres d'hôtes · Collobrières · Var</p><h1>Le calme des Maures,<br>la mer pas loin.</h1></div>
+<div class="hero-txt"><p>Chambres d'hôtes · Collobrières · Var</p><h1>Le calme des Maures,<br>la mer pas loin.</h1><a class="btn hero-cta" href="#reserver">Voir les disponibilités</a></div>
 </div>
-<form class="search" id="search" aria-label="Rechercher des disponibilités">
-<label class="f">Chambre<select id="roomSelect"></select></label>
-<div class="f">Arrivée<span class="val" id="sStart">Ajouter une date</span></div>
-<div class="f">Départ<span class="val" id="sEnd">Ajouter une date</span></div>
-<button type="submit">Voir les disponibilités</button>
-</form>
 </div></section>
 
 <section class="intro">
@@ -254,7 +242,7 @@ function isBooked(room,d){var k=d.getDate()*7+(d.getMonth()+1)*13+room*5;return 
 function scrollBook(){$('reserver').scrollIntoView({behavior:'smooth'})}
 
 // Cartes chambres, onglets, liste déroulante
-var roomsEl=$('rooms'),tabsEl=$('tabs'),sel=$('roomSelect');
+var roomsEl=$('rooms'),tabsEl=$('tabs');
 rooms.forEach(function(r,i){
  var a=document.createElement('article');a.className='room';
  a.innerHTML='<div class="ph"><img loading="lazy" src="'+r.img+'" alt="'+r.alt+'" style="object-position:'+r.pos+'"></div>'+
@@ -264,10 +252,7 @@ rooms.forEach(function(r,i){
  roomsEl.appendChild(a);
  var t=document.createElement('button');t.type='button';t.className='tab';t.textContent=r.name.replace(/^(Chambre|Suite) /,'');
  t.addEventListener('click',function(){setRoom(i)});tabsEl.appendChild(t);
- var o=document.createElement('option');o.value=i;o.textContent=r.name+' – '+r.price+' €';sel.appendChild(o);
 });
-sel.addEventListener('change',function(){setRoom(+sel.value)});
-$('search').addEventListener('submit',function(e){e.preventDefault();scrollBook()});
 $('prev').addEventListener('click',function(){if(st.offset>0){st.offset--;render()}});
 $('next').addEventListener('click',function(){if(st.offset<11){st.offset++;render()}});
 
@@ -284,7 +269,6 @@ function pick(t){
 function render(){
  var r=rooms[st.room];
  [].forEach.call(tabsEl.children,function(b,i){b.setAttribute('aria-pressed',i===st.room?'true':'false')});
- sel.value=st.room;
  var today=new Date();today.setHours(0,0,0,0);
  var first=new Date(today.getFullYear(),today.getMonth()+st.offset,1);
  $('month').textContent=first.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
@@ -308,8 +292,6 @@ function render(){
  $('roomName').textContent=r.name;$('roomPrice').textContent=r.price+' €';
  $('dStart').textContent=st.start===null?'—':fmt(st.start);
  $('dEnd').textContent=st.end===null?'—':fmt(st.end);
- $('sStart').textContent=st.start===null?'Ajouter une date':fmt(st.start);
- $('sEnd').textContent=st.end===null?'Ajouter une date':fmt(st.end);
  $('hint').textContent=st.start===null?'Choisissez votre arrivée dans le calendrier.':st.end===null?'Choisissez votre date de départ.':'Plus que votre nom et votre e-mail.';
  $('nightsLbl').textContent=nights?r.price+' € × '+nights+(nights>1?' nuits':' nuit'):'Nuits';
  $('sub').textContent=$('total').textContent=nights?eur(nights*r.price):'—';
